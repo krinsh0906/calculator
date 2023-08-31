@@ -33,7 +33,7 @@ function Calculator() {
                 <div className="Calculator-Screen Aligned">
                     <div className="Calculator-output">
                         <span>
-                        {input? input:"0"}
+                       
                         </span>
                     </div>
 
@@ -41,7 +41,7 @@ function Calculator() {
                 <div className="Calculator-Input Aligned">
                     
                     <span>
-                        
+                         {input? input:"0"}
                     </span>
 
                 </div>
@@ -52,7 +52,7 @@ function Calculator() {
                         AC
                     </Button>
 
-                    <Button type="button" className="Top-btn" value="+-"onClick={handleinput}>
+                    <Button type="button" className="Top-btn" value="+/-"onClick={handleinput}>
                         <sup>+</sup>/<sub>-</sub>
 
                     </Button>

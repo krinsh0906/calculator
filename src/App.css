@@ -104,7 +104,7 @@ body::-webkit-scrollbar{
 }
 .Calculator-Input span{
   letter-spacing: 0.1rem;
-  color: var(--default-text-color);
+  color: var(--default-color);
   word-wrap: break-word;
   word-break: break-all;
   overflow-y: scroll;
