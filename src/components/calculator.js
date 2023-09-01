@@ -6,6 +6,7 @@ import { FaBackspace } from "react-icons/fa";
 
 function Calculator() {
     const [input,setInput] = useState("");
+     const [output,setOutput] = useState("");
     const handleinput =(e) =>{
         const value = e.target.value;
         setInput((input) => input+value)
@@ -14,14 +15,35 @@ function Calculator() {
     }
     
     const handledelete = () =>{
-        setInput(input.slice(0, -1))
+        if(input.length>0)
+        setInput((input) => input.slice(0, -1))
     }
-    const handleallclear = () =>{
-        setInput("")
+    
+    const handleequal = (e) => {
+        const value = e.target.value;
+        if(value=="="){
+            if(input){
+                setOutput(eval(input));
+                setInput("");
+            }
+            
+        }
+        else if(value=="Ac"){
+            setInput("")
+            setOutput(0)
+        }
+
+        else if(value=="+/-"){
+           if(input){
+            let check = eval(input);
+            setInput(check !== 0 ? (check > 0? `-${check}`: `${Math.abs(check)}`) :"")
+
+           }
+        }
+
+       
     }
-    const handleequal = () => {
-        setInput(eval(input))
-    }
+    
     return (
         <div className="Calculator">
             <div className="Calculator-Wrapper ">
@@ -48,11 +70,11 @@ function Calculator() {
 
                 <div className="Calculator-Button">
 
-                    <Button type="button" className="Top-btn" value="Ac"onClick={handleallclear}>
+                    <Button type="button" className="Top-btn" value="Ac"onClick={handleequal}>
                         AC
                     </Button>
 
-                    <Button type="button" className="Top-btn" value="+/-"onClick={handleinput}>
+                    <Button type="button" className="Top-btn" value="+/-"onClick={handleequal}>
                         <sup>+</sup>/<sub>-</sub>
 
                     </Button>
