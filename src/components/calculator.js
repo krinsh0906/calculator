@@ -24,7 +24,7 @@ function Calculator() {
         if(value=="="){
             if(input){
                 setOutput(eval(input));
-                setInput("");
+                setInput(input);
             }
             
         }
@@ -40,10 +40,50 @@ function Calculator() {
 
            }
         }
+        else if(["+","-","/","*","."].includes(value)){
+            if(input){
+                const lastchar= input.slice(-1)
+                if(["+","-","/","*","."].includes(lastchar)){
+                    setInput(input.slice(0,-1) + value)
+                }
+                else{
+                    setInput(input +value)
+                }
+                  
+                
+            }
+        }
+       
+        
+        
+        
 
        
     }
+    const handledote = (e) => {
+            const value = e.target.value;
+            const lastChar = input.slice(-1);
+          
+            if (value === '.') {
+              // If the last character is an operator, disallow adding a decimal point
+              if (['+', '-', '*', '/'].includes(lastChar)) {
+                return;
+              }
+          
+              // If there's already a decimal point in the current number, disallow adding another
+              const currentNumber = input.split(/[\+\-\*\/]/).pop();
+              if (currentNumber.includes('.')) {
+                return;
+              }
+            }
+          
+            setInput((input) => input + value);
+          };
+          
     
+      
+      
+      
     return (
         <div className="Calculator">
             <div className="Calculator-Wrapper ">
@@ -55,7 +95,7 @@ function Calculator() {
                 <div className="Calculator-Screen Aligned">
                     <div className="Calculator-output">
                         <span>
-                       
+                        {input? input:"0"}
                         </span>
                     </div>
 
@@ -63,7 +103,7 @@ function Calculator() {
                 <div className="Calculator-Input Aligned">
                     
                     <span>
-                         {input? input:"0"}
+                         {output? output:""}
                     </span>
 
                 </div>
@@ -96,8 +136,8 @@ function Calculator() {
                     <Button type="button" className="Normal-btn"value="9"  onClick={handleinput}>
                         9
                     </Button>
-                    <Button type="button" className="Special-btn" value="*" onClick={handleinput}>
-                        *
+                    <Button type="button" className="Special-btn" value="*" onClick={handleequal}>
+                        X
                     </Button>
                     <Button type="button" className="Normal-btn" value="4" onClick={handleinput}>
                         4
@@ -108,7 +148,7 @@ function Calculator() {
                     <Button type="button" className="Normal-btn" value="6" onClick={handleinput}>
                         6
                     </Button>
-                    <Button type="button" className="Special-btn" value="/"onClick={handleinput}>
+                    <Button type="button" className="Special-btn" value="/"onClick={handleequal}>
                       ÷
                     </Button>
                     <Button type="button" className="Normal-btn" value="1" onClick={handleinput}>
@@ -120,25 +160,26 @@ function Calculator() {
                     <Button type="button" className="Normal-btn" value="3" onClick={handleinput}>
                         3
                     </Button>
-                    <Button type="button" className="Special-btn" value="-" onClick={handleinput}>
+                    <Button type="button" className="Special-btn" value="-" onClick={handleequal}>
                         -
                     </Button>
-                    <Button type="button" className="Normal-btn" value="." onClick={handleinput}>
+                    <Button type="button" className="Normal-btn" value="." onClick={handledote}>
                         .
                     </Button>
                     <Button type="button" className="Normal-btn" value="0" onClick={handleinput}>
                         0
                     </Button>
-                    <Button type="button" className="Special-btn" value="+" onClick={handleinput}>
+                    <Button type="button" className="Special-btn" value="+" onClick={handleequal}>
                         +
                     </Button>
                     <Button type="button" className="Special-btn" value="=" onClick={handleequal}>
                         =
                     </Button>
-
+                    
                 </div>
             </div>
         </div>
+        
     )
 
 }
