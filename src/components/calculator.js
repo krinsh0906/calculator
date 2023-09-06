@@ -21,7 +21,7 @@ function Calculator() {
     
     const handleequal = (e) => {
         const value = e.target.value;
-        if(value=="="){
+        if(value == "="){
             if(input){
                 setOutput(eval(input));
                 setInput(input);
@@ -40,10 +40,10 @@ function Calculator() {
 
            }
         }
-        else if(["+","-","/","*","."].includes(value)){
+        else if(["+","-","/","*",".","%"].includes(value)){
             if(input){
                 const lastchar= input.slice(-1)
-                if(["+","-","/","*","."].includes(lastchar)){
+                if(["+","-","/","*",".","%"].includes(lastchar)){
                     setInput(input.slice(0,-1) + value)
                 }
                 else{
@@ -53,6 +53,34 @@ function Calculator() {
                 
             }
         }
+        if (value === "=") {
+            if (input) {
+              // Regular expression to match percentages (e.g., "50%2")
+              const percentageRegex = /^(\d+(\.\d+)?)%(\d+(\.\d+)?)$/;
+        
+              if (percentageRegex.test(input)) {
+                try {
+                  const match = input.match(percentageRegex);
+                  const operand1 = parseFloat(match[1]);
+                  const operand2 = parseFloat(match[3]);
+                  const result = (operand1 / 100) * operand2;
+                  setOutput(result);
+                  setInput(input);
+                } catch (error) {
+                  setOutput("Error");
+                  setInput("");
+                }
+              } else {
+                try {
+                  setOutput(eval(input));
+                  setInput(eval(input).toString());
+                } catch (error) {
+                  setOutput("Error");
+                  setInput("");
+                }
+              }
+            }
+          }
        
         
         
@@ -66,7 +94,7 @@ function Calculator() {
           
             if (value === '.') {
               // If the last character is an operator, disallow adding a decimal point
-              if (['+', '-', '*', '/'].includes(lastChar)) {
+              if (['+', '-', '*', '/','%','.'].includes(lastChar)) {
                 return;
               }
           
@@ -79,6 +107,9 @@ function Calculator() {
           
             setInput((input) => input + value);
           };
+          
+          
+          
           
     
       
@@ -118,7 +149,7 @@ function Calculator() {
                         <sup>+</sup>/<sub>-</sub>
 
                     </Button>
-                    <Button type="button" className="Top-btn" value="%"onClick={handleinput}>
+                    <Button type="button" className="Top-btn" value="%"onClick={handleequal}>
                         %
                     </Button>
 
